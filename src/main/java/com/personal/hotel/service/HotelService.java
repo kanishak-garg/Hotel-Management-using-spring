@@ -19,4 +19,7 @@ public class HotelService {
         hotelMap.put(hotel.getId(),hotel);
     }
 
+    public Hotel getHotelById(String id) {
+        return hotelMap.get(id);
+    }
 }
