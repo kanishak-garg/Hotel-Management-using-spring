@@ -35,4 +35,10 @@ public class HotelController {
         hotelService.deleteHotelById(id);
     }
 
+    @PutMapping("/update")
+    public void updateHotel(@RequestBody Hotel hotel){
+        hotelService.updateHotel(hotel);
+    }
+
+
 }

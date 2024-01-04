@@ -35,4 +35,13 @@ public class HotelService {
         }
         return;
     }
+
+    public void updateHotel(Hotel hotel) {
+        if(hotelMap.containsKey(hotel.getId())){
+            Hotel hotelInDb = hotelMap.get(hotel.getId());
+            hotelList.remove(hotelInDb);
+            hotelMap.put(hotel.getId(),hotel);
+            hotelList.add(hotel);
+        }
+    }
 }
