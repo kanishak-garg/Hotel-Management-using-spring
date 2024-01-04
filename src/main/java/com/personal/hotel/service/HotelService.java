@@ -26,4 +26,13 @@ public class HotelService {
     public List<Hotel> getAllHotels() {
         return hotelList;
     }
+
+    public void deleteHotelById(String id) {
+        if(hotelMap.containsKey(id)){
+            Hotel hotel = getHotelById(id);
+            hotelList.remove(hotel);
+            hotelMap.remove(id);
+        }
+        return;
+    }
 }

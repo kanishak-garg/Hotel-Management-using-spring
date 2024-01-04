@@ -5,6 +5,7 @@ import com.personal.hotel.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,11 @@ public class HotelController {
     @GetMapping("/getAll")
     public List<Hotel> getALlHotels(){
         return hotelService.getAllHotels();
+    }
+
+    @DeleteMapping("/remove/id/{id}")
+    public void deleteHotelById(@PathVariable String id){
+        hotelService.deleteHotelById(id);
     }
 
 }
