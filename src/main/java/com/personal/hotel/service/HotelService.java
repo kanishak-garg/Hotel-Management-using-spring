@@ -44,4 +44,14 @@ public class HotelService {
             hotelList.add(hotel);
         }
     }
+
+    public void updateHotelById(String id, Hotel hotel) {
+        if(hotelMap.containsKey(hotel.getId())) {
+            Hotel hotelInDb = hotelMap.get(id);
+            hotelList.remove(hotelInDb);
+            hotel.setId(id);
+            hotelMap.put(id, hotel);
+            hotelList.add(hotel);
+        }
+    }
 }

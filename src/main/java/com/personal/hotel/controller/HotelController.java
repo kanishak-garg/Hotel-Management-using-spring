@@ -40,5 +40,10 @@ public class HotelController {
         hotelService.updateHotel(hotel);
     }
 
+    @PutMapping("/update/id/{id}")
+    public void updateHotelById(@PathVariable String id,@RequestBody Hotel hotel){
+        hotelService.updateHotelById(id,hotel);
+    }
+
 
 }
