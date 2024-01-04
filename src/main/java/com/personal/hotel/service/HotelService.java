@@ -1,7 +1,9 @@
 package com.personal.hotel.service;
 
+import com.personal.hotel.exceptions.HotelNotFoundException;
 import com.personal.hotel.model.Hotel;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +22,9 @@ public class HotelService {
     }
 
     public Hotel getHotelById(String id) {
+        if(ObjectUtils.isEmpty(hotelMap.get(id))){
+            throw new HotelNotFoundException("Hotel is not found: " + id);
+        }
         return hotelMap.get(id);
     }
 
