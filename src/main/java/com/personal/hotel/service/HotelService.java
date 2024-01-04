@@ -23,7 +23,7 @@ public class HotelService {
 
     public Hotel getHotelById(String id) {
         if(ObjectUtils.isEmpty(hotelMap.get(id))){
-            throw new HotelNotFoundException("Hotel is not found: " + id);
+            throw new HotelNotFoundException("hotel not found with id: " + id);
         }
         return hotelMap.get(id);
     }

@@ -1,9 +1,16 @@
 package com.personal.hotel.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+
 public class Hotel {
 
     private String id;
+    @Size(min=3)
     private String name;
+    @Min(value=1)
+    @Max(value=10)
     private long rating;
     private String city;
 

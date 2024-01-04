@@ -1,10 +1,14 @@
 package com.personal.hotel.controller;
 
+import com.personal.hotel.exceptions.BadRequestException;
 import com.personal.hotel.model.Hotel;
 import com.personal.hotel.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -16,7 +20,10 @@ public class HotelController {
     HotelService hotelService;
 
     @PostMapping("/create")
-    public void createHotel(@RequestBody Hotel hotel){
+    public void createHotel(@Valid @RequestBody Hotel hotel, BindingResult bindingResult) throws BadRequestException {
+        if(bindingResult.hasErrors()){
+            throw new BadRequestException("The Request is Invalid:\\n hotel name should be min 3 char\\nrating should be 1 to 10");
+        }
         hotelService.createHotel(hotel);
     }
 
