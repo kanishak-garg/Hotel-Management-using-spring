@@ -22,4 +22,8 @@ public class HotelService {
     public Hotel getHotelById(String id) {
         return hotelMap.get(id);
     }
+
+    public List<Hotel> getAllHotels() {
+        return hotelList;
+    }
 }

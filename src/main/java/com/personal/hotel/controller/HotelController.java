@@ -5,7 +5,10 @@ import com.personal.hotel.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/hotel")
 public class HotelController {
 
     @Autowired
@@ -20,4 +23,10 @@ public class HotelController {
     public Hotel getHotelById(@PathVariable String id){
         return hotelService.getHotelById(id);
     }
+
+    @GetMapping("/getAll")
+    public List<Hotel> getALlHotels(){
+        return hotelService.getAllHotels();
+    }
+
 }
