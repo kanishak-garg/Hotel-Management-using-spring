@@ -47,6 +47,7 @@ public class HotelService {
             Hotel hotel = getHotelById(id);
             hotelList.remove(hotel);
             hotelMap.remove(id);
+            ratingServiceCommunicator.deleteRating(id);
         }
         return;
     }
@@ -54,6 +55,11 @@ public class HotelService {
     public void updateHotel(Hotel hotel) {
         if(hotelMap.containsKey(hotel.getId())){
             Hotel hotelInDb = hotelMap.get(hotel.getId());
+            if(hotel.getRating() != hotelInDb.getRating()){
+                Map<String,Long> ratingMap= new HashMap<String,Long>();
+                ratingMap.put(hotel.getId(),hotel.getRating());
+                ratingServiceCommunicator.updateRating(ratingMap);
+            }
             hotelList.remove(hotelInDb);
             hotelMap.put(hotel.getId(),hotel);
             hotelList.add(hotel);

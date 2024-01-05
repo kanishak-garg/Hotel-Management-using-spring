@@ -29,8 +29,19 @@ public class RatingServiceCommunicator {
     public void addRating(Map<String,Long> ratingMap){
         String url = "http://localhost:8081/rating/add";
 //        ResponseEntity<Object> response = restTemplate.postForEntity(url,ratingMap,Object.class);
-        HttpEntity requestEntity = new HttpEntity(ratingMap);
+        HttpEntity<Map<String,Long>> requestEntity = new HttpEntity<>(ratingMap);
         ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.POST,requestEntity,Object.class);
     }
+
+    public void updateRating(Map<String, Long> ratingMap) {
+        String url = "http://localhost:8081/rating/update";
+        HttpEntity<Map<String,Long>> requestEntity = new HttpEntity<>(ratingMap);
+        ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.PUT,requestEntity,Object.class);
+    }
+    public void deleteRating(String id) {
+        String url = "http://localhost:8081/rating/id/";
+        ResponseEntity<Object> response = restTemplate.exchange(url+id, HttpMethod.DELETE,null,Object.class);
+    }
+
 
 }
