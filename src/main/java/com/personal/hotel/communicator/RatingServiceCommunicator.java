@@ -2,6 +2,8 @@ package com.personal.hotel.communicator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,7 +28,9 @@ public class RatingServiceCommunicator {
 
     public void addRating(Map<String,Long> ratingMap){
         String url = "http://localhost:8081/rating/add";
-        ResponseEntity<Object> response = restTemplate.postForEntity(url,ratingMap,Object.class);
+//        ResponseEntity<Object> response = restTemplate.postForEntity(url,ratingMap,Object.class);
+        HttpEntity requestEntity = new HttpEntity(ratingMap);
+        ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.POST,requestEntity,Object.class);
     }
 
 }
