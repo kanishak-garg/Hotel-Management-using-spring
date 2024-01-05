@@ -25,6 +25,8 @@ public class HotelService {
         if(ObjectUtils.isEmpty(hotelMap.get(id))){
             throw new HotelNotFoundException("hotel not found with id: " + id);
         }
+        Hotel hotel = hotelMap.get(id);
+
         return hotelMap.get(id);
     }
 
