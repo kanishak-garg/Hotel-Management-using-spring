@@ -23,6 +23,10 @@ public class HotelService {
     public void createHotel(Hotel hotel){
         hotelList.add(hotel);
         hotelMap.put(hotel.getId(),hotel);
+
+        Map<String,Long> ratingMap= new HashMap<String,Long>();
+        ratingMap.put(hotel.getId(),hotel.getRating());
+        ratingServiceCommunicator.addRating(ratingMap);
     }
 
     public Hotel getHotelById(String id) {
