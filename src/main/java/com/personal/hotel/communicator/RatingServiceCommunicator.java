@@ -1,11 +1,11 @@
 package com.personal.hotel.communicator;
 
+import com.personal.hotel.exceptions.HttpRatingServiceNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -22,7 +22,8 @@ public class RatingServiceCommunicator {
 
     public long getRating(String id){
         String url = "http://localhost:8081/rating/id/";
-        ResponseEntity<Long> response = restTemplate.getForEntity(url+id,Long.class);
+//        ResponseEntity<Long> response = restTemplate.getForEntity(url+id,Long.class);
+        ResponseEntity<Long> response = restTemplate.exchange(url + id, HttpMethod.GET, null, Long.class);
         return response.getBody();
     }
 
@@ -39,8 +40,12 @@ public class RatingServiceCommunicator {
         ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.PUT,requestEntity,Object.class);
     }
     public void deleteRating(String id) {
-        String url = "http://localhost:8081/rating/id/";
-        ResponseEntity<Object> response = restTemplate.exchange(url+id, HttpMethod.DELETE,null,Object.class);
+        String url = "http://localhost:8081/rating/remove/id/";
+        try{
+            ResponseEntity<Object> response = restTemplate.exchange(url+id, HttpMethod.DELETE,null,Object.class);
+        }catch (HttpClientErrorException e){
+            throw new HttpRatingServiceNotFound(HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+        }
     }
 
 
