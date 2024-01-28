@@ -1,11 +1,26 @@
 package com.personal.hotel.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import java.util.Objects;
+
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Hotel {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     @Size(min=3)
     private String name;
@@ -13,53 +28,4 @@ public class Hotel {
     @Max(value=10)
     private long rating;
     private String city;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getRating() {
-        return rating;
-    }
-
-    public void setRating(long rating) {
-        this.rating = rating;
-    }
-
-    public Hotel(String id, String name, long rating, String city) {
-        this.id = id;
-        this.name = name;
-        this.rating = rating;
-        this.city = city;
-    }
-
-    @Override
-    public String toString() {
-        return "Hotel{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", rating=" + rating +
-                ", city='" + city + '\'' +
-                '}';
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

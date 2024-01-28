@@ -21,6 +21,9 @@ public class HotelService {
     RatingServiceCommunicator ratingServiceCommunicator;
 
     public void createHotel(Hotel hotel){
+        if(hotelMap.containsKey(hotel.getId())){
+            return;
+        }
         hotelList.add(hotel);
         hotelMap.put(hotel.getId(),hotel);
 
