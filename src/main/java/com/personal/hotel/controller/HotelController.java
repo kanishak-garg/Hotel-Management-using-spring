@@ -1,5 +1,6 @@
 package com.personal.hotel.controller;
 
+import com.personal.hotel.dto.HotelDTO;
 import com.personal.hotel.exceptions.BadRequestException;
 import com.personal.hotel.model.Hotel;
 import com.personal.hotel.service.HotelService;
@@ -20,11 +21,11 @@ public class HotelController {
     HotelService hotelService;
 
     @PostMapping("/create")
-    public void createHotel(@Valid @RequestBody Hotel hotel, BindingResult bindingResult) throws BadRequestException {
+    public void createHotel(@Valid @RequestBody HotelDTO hotelDto, BindingResult bindingResult) throws BadRequestException {
         if(bindingResult.hasErrors()){
             throw new BadRequestException("The Request is Invalid:\\n hotel name should be min 3 char\\nrating should be 1 to 10");
         }
-        hotelService.createHotel(hotel);
+        hotelService.createHotel(hotelDto);
     }
 
     @GetMapping("/id/{id}")
@@ -43,13 +44,13 @@ public class HotelController {
     }
 
     @PutMapping("/update")
-    public void updateHotel(@RequestBody Hotel hotel){
-        hotelService.updateHotel(hotel);
+    public void updateHotel(@RequestBody HotelDTO hotelDto){
+        hotelService.updateHotel(hotelDto);
     }
 
     @PutMapping("/update/id/{id}")
-    public void updateHotelById(@PathVariable String id,@RequestBody Hotel hotel){
-        hotelService.updateHotelById(id,hotel);
+    public void updateHotelById(@PathVariable String id,@RequestBody HotelDTO hotelDto){
+        hotelService.updateHotelById(id,hotelDto);
     }
 
 

@@ -1,8 +1,11 @@
 package com.personal.hotel.service;
 
 import com.personal.hotel.communicator.RatingServiceCommunicator;
+import com.personal.hotel.dto.HotelDTO;
 import com.personal.hotel.exceptions.HotelNotFoundException;
+import com.personal.hotel.mapper.HotelMapper;
 import com.personal.hotel.model.Hotel;
+import com.personal.hotel.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -14,38 +17,29 @@ import java.util.Map;
 
 @Service
 public class HotelService {
-    List<Hotel> hotelList = new ArrayList<>();
-    Map<String,Hotel> hotelMap = new HashMap<>();
 
     @Autowired
-    RatingServiceCommunicator ratingServiceCommunicator;
+    HotelMapper hotelMapper;
 
-    public void createHotel(Hotel hotel){
-        if(hotelMap.containsKey(hotel.getId())){
-            return;
-        }
-        hotelList.add(hotel);
-        hotelMap.put(hotel.getId(),hotel);
+    @Autowired
+    HotelRepository hotelRepository;
 
-        Map<String,Long> ratingMap= new HashMap<String,Long>();
-        ratingMap.put(hotel.getId(),hotel.getRating());
-        ratingServiceCommunicator.addRating(ratingMap);
+    public void createHotel(HotelDTO hotelDto){
+        Hotel hotel = hotelMapper.convertHotelDtoToEntity(hotelDto);
+        hotelRepository.save(hotel);
     }
 
-    public Hotel getHotelById(String id) {
-        if(ObjectUtils.isEmpty(hotelMap.get(id))){
-            throw new HotelNotFoundException("hotel not found with id: " + id);
-        }
-        Hotel hotel = hotelMap.get(id);
-        hotel.setRating(ratingServiceCommunicator.getRating(id));
-        return hotelMap.get(id);
+    public HotelDTO getHotelById(int id) {
+        Hotel hotel = hotelRepository.findById(id).get();
+        return hotelMapper.convertHotelEntityToDto(hotel);
+
     }
 
     public List<Hotel> getAllHotels() {
         return hotelList;
     }
 
-    public void deleteHotelById(String id) {
+    public void deleteHotelById(int id) {
         if(hotelMap.containsKey(id)){
             Hotel hotel = getHotelById(id);
             hotelList.remove(hotel);
@@ -69,7 +63,7 @@ public class HotelService {
         }
     }
 
-    public void updateHotelById(String id, Hotel hotel) {
+    public void updateHotelById(int id, Hote hotelDto) {
         if(hotelMap.containsKey(hotel.getId())) {
             Hotel hotelInDb = hotelMap.get(id);
             hotelList.remove(hotelInDb);

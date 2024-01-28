@@ -21,11 +21,8 @@ import java.util.Objects;
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
-    @Size(min=3)
+    private int id;
     private String name;
-    @Min(value=1)
-    @Max(value=10)
     private long rating;
     private String city;
 }
