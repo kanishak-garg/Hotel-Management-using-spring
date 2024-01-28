@@ -32,44 +32,29 @@ public class HotelService {
     public HotelDTO getHotelById(int id) {
         Hotel hotel = hotelRepository.findById(id).get();
         return hotelMapper.convertHotelEntityToDto(hotel);
-
     }
 
-    public List<Hotel> getAllHotels() {
-        return hotelList;
+    public List<HotelDTO> getAllHotels() {
+        List<Hotel> hotelList = hotelRepository.findAll();
+        List<HotelDTO> hotelDtoList = new ArrayList<>();
+        hotelList.forEach(hotel -> hotelDtoList.add(hotelMapper.convertHotelEntityToDto(hotel)));
+        return hotelDtoList;
     }
 
     public void deleteHotelById(int id) {
-        if(hotelMap.containsKey(id)){
-            Hotel hotel = getHotelById(id);
-            hotelList.remove(hotel);
-            hotelMap.remove(id);
-            ratingServiceCommunicator.deleteRating(id);
-        }
-        return;
+        hotelRepository.deleteById(id);
     }
 
-    public void updateHotel(Hotel hotel) {
-        if(hotelMap.containsKey(hotel.getId())){
-            Hotel hotelInDb = hotelMap.get(hotel.getId());
-            if(hotel.getRating() != hotelInDb.getRating()){
-                Map<String,Long> ratingMap= new HashMap<String,Long>();
-                ratingMap.put(hotel.getId(),hotel.getRating());
-                ratingServiceCommunicator.updateRating(ratingMap);
-            }
-            hotelList.remove(hotelInDb);
-            hotelMap.put(hotel.getId(),hotel);
-            hotelList.add(hotel);
-        }
+    public void updateHotel(HotelDTO hotelDto) {
+//        Hotel hotel = hotelMapper.convertHotelDtoToEntity(hotelDto);
+//        Hotel hotelDB = hotelRepository.findOne(hotel).get();
+//        hotelRepository.save(hotel);
     }
 
-    public void updateHotelById(int id, Hote hotelDto) {
-        if(hotelMap.containsKey(hotel.getId())) {
-            Hotel hotelInDb = hotelMap.get(id);
-            hotelList.remove(hotelInDb);
-            hotel.setId(id);
-            hotelMap.put(id, hotel);
-            hotelList.add(hotel);
-        }
+    public void updateHotelById(int id, HotelDTO hotelDto) {
+//        Hotel hotelDB = hotelRepository.findById(id).get();
+//        Hotel hotel = hotelMapper.convertHotelDtoToEntity(hotelDto);
+//        hotelDB.setName(hotel.getName());
+//        hotelRepository.save(hotel);
     }
 }

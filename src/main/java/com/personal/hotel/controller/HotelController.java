@@ -29,17 +29,17 @@ public class HotelController {
     }
 
     @GetMapping("/id/{id}")
-    public Hotel getHotelById(@PathVariable String id){
+    public HotelDTO getHotelById(@PathVariable int id){
         return hotelService.getHotelById(id);
     }
 
     @GetMapping("/getAll")
-    public List<Hotel> getALlHotels(){
+    public List<HotelDTO> getALlHotels(){
         return hotelService.getAllHotels();
     }
 
     @DeleteMapping("/remove/id/{id}")
-    public void deleteHotelById(@PathVariable String id){
+    public void deleteHotelById(@PathVariable int id){
         hotelService.deleteHotelById(id);
     }
 
@@ -49,7 +49,7 @@ public class HotelController {
     }
 
     @PutMapping("/update/id/{id}")
-    public void updateHotelById(@PathVariable String id,@RequestBody HotelDTO hotelDto){
+    public void updateHotelById(@PathVariable int id,@RequestBody HotelDTO hotelDto){
         hotelService.updateHotelById(id,hotelDto);
     }
 
