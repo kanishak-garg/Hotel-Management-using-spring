@@ -34,11 +34,13 @@ public class HotelService {
         return hotelMapper.convertHotelEntityToDto(hotel);
     }
 
-    public List<HotelDTO> getAllHotels() {
+    public List<Hotel> getAllHotels() {
         List<Hotel> hotelList = hotelRepository.findAll();
-        List<HotelDTO> hotelDtoList = new ArrayList<>();
-        hotelList.forEach(hotel -> hotelDtoList.add(hotelMapper.convertHotelEntityToDto(hotel)));
-        return hotelDtoList;
+        return hotelList;
+//        List<HotelDTO> hotelDtoList = new ArrayList<>();
+//        hotelList.forEach(hotel -> hotelDtoList.add(hotelMapper.convertHotelEntityToDto(hotel)));
+//        System.out.println(hotelRepository);
+//        return hotelDtoList;
     }
 
     public void deleteHotelById(int id) {

@@ -2,7 +2,9 @@ package com.personal.hotel.mapper;
 
 import com.personal.hotel.dto.HotelDTO;
 import com.personal.hotel.model.Hotel;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HotelMapper {
 
     public Hotel convertHotelDtoToEntity(HotelDTO hotelDTO){
