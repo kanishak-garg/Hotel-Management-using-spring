@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -19,11 +20,12 @@ public class HotelSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers("/hotel").hasAuthority("User")
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/hotel/create").hasAnyRole("NORMAL","ADMIN")
                         .anyRequest()
                         .authenticated()
-                ).formLogin(Customizer.withDefaults());
+                ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
@@ -38,7 +40,7 @@ public class HotelSecurityConfig {
         UserDetails user2 = User.builder()
                 .username("kanishak")
                 .password(passwordEncoder().encode("happy"))
-                .roles("NORMAL")
+                .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user1,user2);
     }
