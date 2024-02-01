@@ -5,6 +5,7 @@ import com.personal.hotel.exceptions.BadRequestException;
 import com.personal.hotel.model.Hotel;
 import com.personal.hotel.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class HotelController {
     HotelService hotelService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public void createHotel(@Valid @RequestBody HotelDTO hotelDto, BindingResult bindingResult) throws BadRequestException {
         if(bindingResult.hasErrors()){
             throw new BadRequestException("The Request is Invalid:\\n hotel name should be min 3 char\\nrating should be 1 to 10");
@@ -29,16 +31,19 @@ public class HotelController {
     }
 
     @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('NORMAL')")
     public HotelDTO getHotelById(@PathVariable int id){
         return hotelService.getHotelById(id);
     }
 
     @GetMapping("/getAll")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Hotel> getALlHotels(){
         return hotelService.getAllHotels();
     }
 
     @DeleteMapping("/remove/id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteHotelById(@PathVariable int id){
         hotelService.deleteHotelById(id);
     }
