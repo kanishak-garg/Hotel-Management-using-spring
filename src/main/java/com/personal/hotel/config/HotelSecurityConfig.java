@@ -26,33 +26,33 @@ public class HotelSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers("/hotel/create").hasAnyRole("NORMAL","ADMIN")
                         .anyRequest()
                         .authenticated()
                 ).httpBasic(Customizer.withDefaults());
+
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService users(){
-        UserDetails user1 = User.builder()
-                .username("tony")
-                .password(passwordEncoder().encode("password"))
-                .roles("NORMAL")
-                .build();
-
-        UserDetails user2 = User.builder()
-                .username("kanishak")
-                .password(passwordEncoder().encode("happy"))
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user1,user2);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public UserDetailsService users(){
+//        UserDetails user1 = User.builder()
+//                .username("tony")
+//                .password(passwordEncoder().encode("password"))
+//                .roles("NORMAL")
+//                .build();
+//
+//        UserDetails user2 = User.builder()
+//                .username("kanishak")
+//                .password(passwordEncoder().encode("happy"))
+//                .roles("ADMIN")
+//                .build();
+//        return new InMemoryUserDetailsManager(user1,user2);
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 
 }
 
