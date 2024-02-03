@@ -1,5 +1,6 @@
 package com.personal.hotel.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,15 +26,21 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class HotelSecurityConfig {
 
+    @Autowired
+    UserDetailsService userDetailsService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/user/register").permitAll()
                         .anyRequest()
-                        .authenticated()
-                ).httpBasic(Customizer.withDefaults());
-
+                        .authenticated())
+                .rememberMe((remember) -> remember
+                        .userDetailsService(userDetailsService))
+                .formLogin(form -> form.loginPage("/login").permitAll())
+                .logout((logout) -> logout.deleteCookies("remember-me"));
+// remember-me came from the form remember me button name
         return http.build();
     }
 
