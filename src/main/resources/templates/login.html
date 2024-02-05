@@ -1,13 +1,14 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
     <title>Please Log In</title>
 </head>
 <body>
+<div>
 <h1>Please Log In</h1>
-<div th:if="${param.error}">
-    Invalid username and password.</div>
-<div th:if="${param.logout}">
-    You have been logged out.</div>
+    You have been logged out.
 <form th:action="@{/login}" method="post">
     <div>
         <input type="text" name="username" placeholder="Username"/>
@@ -16,7 +17,8 @@
         <input type="password" name="password" placeholder="Password"/>
     </div>
     <div><input type="checkbox" name="remember-me"/>&nbsp;Remember me</div>
-    <input type="submit" value="Log in" />
+    <input type="submit" value="Login" />
 </form>
+</div>
 </body>
 </html>
